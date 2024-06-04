@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESPP Profit Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            direction: rtl;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            text-align: center;
+            font-size: 2em;
+            color: #333333;
+            margin-bottom: 20px;
+        }
+        .explanation {
+            background-color: #e9f7ef;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .calculator {
+            background-color: #d5e8d4;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #333333;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            font-weight: bold;
+            color: #333333;
+        }
+        input[type="date"] {
+            direction: ltr;
+            text-align: right;
+        }
+        .warning {
+            border: 2px solid #ffcccc;
+            background-color: #ffe6e6;
+        }
+        .warning-message {
+            color: #cc0000;
+            font-size: 0.9em;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title" id="page-title">טוען...</div>
+        <div class="explanation">
+            <!-- Editable Explanation Text -->
+            <p id="explanation-text">טוען...</p>
+        </div>
+        <div class="calculator">
+            <!-- Calculator Template -->
+            <h2>מחשבון רווחי ESPP</h2>
+            <form id="calculator-form">
+                <label for="stockSymbol">סימול מניה:</label>
+                <input type="text" id="stockSymbol" placeholder="הכנס את סימול המניה" required oninput="debounceValidateStockSymbol()">
+                <span id="stockSymbolWarning" class="warning-message"></span>
+
+                <label for="monthlySalary">משכורת חודשית (ברוטו בש"ח):</label>
+                <input type="text" id="monthlySalary" placeholder="הכנס את המשכורת החודשית שלך" required onblur="handleMonthlySalaryInput(event)">
+                <span id="monthlySalaryWarning" class="warning-message"></span>
+                
+                <label for="contributionPercentage">אחוז הפרשה ל-ESPP:</label>
+                <input type="text" id="contributionPercentage" placeholder="הכנס את אחוז ההפרשה" required onblur="handleContributionPercentageInput(event)">
+                <span id="contributionPercentageWarning" class="warning-message"></span>
+                
+                <label for="startDate">תאריך התחלה:</label>
+                <input type="date" id="startDate" required>
+                <span id="startDateWarning" class="warning-message"></span>
+                
+                <label for="soldDate">תאריך מכירה:</label>
+                <input type="date" id="soldDate" required>
+                <span id="soldDateWarning" class="warning-message"></span>
+                
+                <button type="button" onclick="calculateProfit()">חשב רווח</button>
+                <p id="result"></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="calculate.js"></script>
+    <script>
+        // Function to load texts from a configuration file
+        function loadTexts() {
+            fetch('texts.json')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('page-title').innerText = data.title;
+                    document.getElementById('explanation-text').innerText = data.explanationText;
+                })
+                .catch(error => {
+                    document.getElementById('page-title').innerText = 'Error loading title';
+                    document.getElementById('explanation-text').innerText = 'Failed to load explanation text.';
+                    console.error('Error loading config:', error);
+                });
+        }
+
+        // Call the function to load the texts
+        window.onload = function() {
+            loadApiKey();
+            loadTexts();
+        };
+    </script>
+</body>
+</html>
