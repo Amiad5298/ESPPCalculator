@@ -1,4 +1,4 @@
-//est
+let debounceDelay = 3000;
 let apiKey;
 let debounceTimerSalary;
 let debounceTimerPercentage;
@@ -31,7 +31,7 @@ function handleMonthlySalaryInput(event) {
         if (!isNaN(value) && value !== '') {
             input.value = formatNumberWithCommas(value);
         }
-    }, 500); // Adjust the debounce delay as needed
+    }, debounceDelay); 
 }
 
 function handleContributionPercentageInput(event) {
@@ -42,7 +42,7 @@ function handleContributionPercentageInput(event) {
         if (!isNaN(value) && value !== '') {
             input.value = formatPercentage(value);
         }
-    }, 500); // Adjust the debounce delay as needed
+    }, debounceDelay); 
 }
 
 async function fetchStockPrice(symbol) {
@@ -92,7 +92,7 @@ async function validateStockSymbol() {
 
 function debounceValidateStockSymbol() {
     clearTimeout(debounceTimerSymbol);
-    debounceTimerSymbol = setTimeout(validateStockSymbol, 500); // Adjust the debounce delay as needed
+    debounceTimerSymbol = setTimeout(validateStockSymbol, debounceDelay); 
 }
 
 function monthsDiff(d1, d2) {
