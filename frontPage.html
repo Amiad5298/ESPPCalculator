@@ -76,6 +76,17 @@
             margin-bottom: 10px;
             display: block;
         }
+        @keyframes fadeInOut {
+            10% { opacity: 1; }
+            0% { opacity: 0; }
+            100% { opacity: 0; }
+            90% { opacity: 1; }
+        }
+        .warning-message {
+            animation: fadeInOut 3s forwards;
+        }
+        
+        
     </style>
 </head>
 <body>
@@ -99,7 +110,7 @@
                 
                 <label for="contributionPercentage">אחוז הפרשה ל-ESPP:</label>
                 <input type="text" id="contributionPercentage" placeholder="הכנס את אחוז ההפרשה" required onblur="handleContributionPercentageInput(event)">
-                <span id="contributionPercentageWarning" class="warning-message"></span>
+                <span id="contributionPercentageWarning" class="warning- "></span>
                 
                 <label for="startDate">תאריך התחלה:</label>
                 <input type="date" id="startDate" required>
@@ -116,6 +127,7 @@
     </div>
 
     <script src="calculate.js"></script>
+    <script src="validations.js"></script>
     <script>
         // Function to load texts from a configuration file
         function loadTexts() {
