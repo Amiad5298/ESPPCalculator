@@ -21,7 +21,7 @@ class Validations {
                 document.getElementById(inputId).classList.add('warning');
                 valid = false;
             } else {
-                this.#clearWarning(warningId);
+                this.#clearWarning(warningId, inputId);
                 document.getElementById(inputId).classList.remove('warning');
             }
         });
@@ -48,11 +48,24 @@ class Validations {
     }
 
     #setWarning(elementId, message) {
-        document.getElementById(elementId).innerText = message;
+        const element = document.getElementById(elementId);
+        element.innerText = message;
+        element.classList.add('warning-message');
+        setTimeout(() => {
+            element.classList.remove('warning-message');
+            element.innerText = '';
+        }, 3000); // Remove the warning message after 3 seconds
     }
 
-    #clearWarning(elementId) {
-        document.getElementById(elementId).innerText = '';
+    #clearWarning(elementId, inputId) {
+        const element = document.getElementById(elementId);
+        element.innerText = '';
+        element.classList.remove('warning-message');
+
+        if (inputId) {
+            const inputElement = document.getElementById(inputId);
+            inputElement.style.backgroundColor = '#ffffff'; // Reset background color
+        }
     }
 
     #clearAllWarnings() {

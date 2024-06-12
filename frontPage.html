@@ -76,6 +76,17 @@
             margin-bottom: 10px;
             display: block;
         }
+        @keyframes fadeInOut {
+            10% { opacity: 1; }
+            0% { opacity: 0; }
+            100% { opacity: 0; }
+            90% { opacity: 1; }
+        }
+        .warning-message {
+            animation: fadeInOut 3s forwards;
+        }
+        
+        
     </style>
 </head>
 <body>
